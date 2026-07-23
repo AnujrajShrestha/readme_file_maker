@@ -8,12 +8,12 @@ from tools import ProjectAnalysis,TechStack,Features,FolderStructure,Installatio
 load_dotenv()
 
 llm_mistral= ChatMistralAI(
-    model="mistral-small-latest",
+    model="mistral-large-latest",
     temperature=0.6
 )
 
 llm_groq= ChatGroq(
-    model="llama-3.1-8b-instant",
+    model="llama-3.3-70b-versatile",
     temperature=0.6,
 )
 
