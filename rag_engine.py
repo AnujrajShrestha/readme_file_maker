@@ -1,94 +1,60 @@
 from git_clone import clone_repo
 from db import run_db,load_context
-from agents import analyzer_agent,agent_extract_features,agent_architecture_maker,agent_extract_structure,agent_techStack,agent_installation,agent_env,agent_usage,agent_impovements,agent_author_info
-from readme_maker import create_readme
+from agents import agent_groq,agent_mistral,mistral_prompt,groq_prompt
 from config import ProjectInput
+from readme_maker import create_readme
 
-def run_agent(agent_factory, prompt, state_key, context, state):
-    print("\n" + "-" * 60)
-    print(f"{state_key} agent is working...")
-    print("-" * 60)
-
-    agent = agent_factory()
-
-    result = agent.invoke({
-        "messages": [{
-            "role": "user",
-            "content": prompt.format(context=context)
-        }]
-    })
-
-    state[state_key+"_result"] = result["structured_response"]
-
-    print(f"\n{state_key}:\n")
-    for name, value in state[state_key+"_result"].model_dump().items():
-        print(f"{name}: {value}\n")
-
-
-def run_pipeline(url: str):
+def run_pipeline(user_input: str):
+    url=user_input['url']
     state = {}
 
     clone_repo(url)
     run_db(url)
 
     context = load_context("Create a README file for this repository")
+    
+    print("\n"+" -"*50)
+    print("Step 1 - groq agent is working ...")
+    print("\n"+" -"*50)
+    
+    agent1 = agent_groq()
+    response_groq = agent1.invoke(
+    {
+        "messages": groq_prompt.invoke(
+            {
+                "context": context,
+                "input": "Generate installation instructions."
+            }
+        ).messages
+    }
+)
+    state['groq_result']= response_groq
+    print(response_groq)
+    
+    print("\n"+" -"*50)
+    print("Step 2 - mistral agent is working ...")
+    print("\n"+" -"*50)
+    
+    agent2 = agent_mistral()
+    response_mistral = agent2.invoke(
+    {
+        "messages": mistral_prompt.invoke(
+            {
+                "context": context,
+                "input": "Explain the project architecture."
+            }
+        ).messages
+    }
+)
+    state['mistral_result']= response_mistral
+    print(response_mistral)
 
-    # List of all agents
-    agent_steps = [
-        (
-            analyzer_agent,
-            "Analyse the following repository:\n\n{context}",
-            "analysis",
-        ),
-        (
-            agent_extract_features,
-            "Extract the key features from:\n\n{context}",
-            "features",
-        ),
-        (
-            agent_architecture_maker,
-            "Generate the project architecture from:\n\n{context}",
-            "architecture",
-        ),
-        (
-            agent_extract_structure,
-            "Describe the folder and file structure from:\n\n{context}",
-            "structure",
-        ),
-        (
-            agent_techStack,
-            "Identify the technologies used in:\n\n{context}",
-            "techstack",
-        ),
-        (
-            agent_installation,
-            "Generate installation instructions for:\n\n{context}",
-            "installation",
-        ),
-        (
-            agent_env,
-            "Extract all required environment variables from:\n\n{context}",
-            "env",
-        ),
-        (
-            agent_usage,
-            "Generate usage instructions for:\n\n{context}",
-            "usage",
-        ),
-        (
-            agent_impovements,
-            "Suggest possible improvements for:\n\n{context}",
-            "improvements",
-        ),
-        (
-            agent_author_info,
-            "Generate author information for:\n\n{context}",
-            "author",
-        ),
-    ]
 
-    for agent_factory, prompt, state_key in agent_steps:
-        run_agent(agent_factory, prompt, state_key, context, state)
+    state['author_result']={
+        'author': user_input['author_name'],
+        'github_id_url': user_input['github_id_url'],
+        'decs': "⭐ If you found this project useful, consider giving it a star on GitHub!"
+    }
         
     create_readme(state,url)
 
@@ -108,4 +74,4 @@ if __name__ == "__main__":
         'github_id_url': github_id_url
     })
     
-    run_pipeline(ProjectInput[0]['url'])
+    run_pipeline(ProjectInput[0])

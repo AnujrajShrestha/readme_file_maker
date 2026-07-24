@@ -5,6 +5,7 @@ langchain-chroma
 
 langchain-groq
 langchain-mistralai
+langchain-google-genai
 
 chromadb
 

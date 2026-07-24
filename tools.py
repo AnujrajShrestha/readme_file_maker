@@ -121,18 +121,3 @@ class Usage(BaseModel):
 @tool
 def usage_tool(question: str):
     """Generate usage instructions."""
-    
-class author_info(BaseModel):
-    author: Optional[str]= Field(description="Author name")
-    github_id_url: Optional[str]= Field(description="github ID url")
-    decs: str
-    
-@tool
-def author_information(question: str) -> author_info:
-    "Fill author infotmation"
-    
-    return author_info(
-        author=ProjectInput[0]['author_name'],
-        github_id_url=ProjectInput[0]['github_id_url'],
-        decs="⭐ If you found this project useful, consider giving it a star on GitHub!"
-    )
