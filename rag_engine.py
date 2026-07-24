@@ -29,7 +29,7 @@ def run_pipeline(user_input: str):
     }
 )
     state['groq_result']= response_groq
-    print(response_groq)
+    print(response_groq.content)
     
     print("\n"+" -"*50)
     print("Step 2 - mistral agent is working ...")
@@ -47,7 +47,7 @@ def run_pipeline(user_input: str):
     }
 )
     state['mistral_result']= response_mistral
-    print(response_mistral)
+    print(response_mistral.content)
 
 
     state['author_result']={
