@@ -28,6 +28,3 @@ tree-sitter-python
 # Utilities
 python-dotenv
 pydantic
-
-# UI
-streamlit

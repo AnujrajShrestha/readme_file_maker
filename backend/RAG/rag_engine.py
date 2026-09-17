@@ -1,8 +1,8 @@
-from git_clone import clone_repo
-from db import run_db,load_context
-from agents import agent_groq_20b,agent_groq_120b,mistral_prompt,groq_prompt
-from config import ProjectInput
-from readme_maker import create_readme,_extract_content
+from .git_clone import clone_repo
+from .db import run_db,load_context
+from .agents import agent_groq_20b,agent_groq_120b,mistral_prompt,groq_prompt
+from .config import ProjectInput
+from .readme_maker import create_readme,_extract_content
 
 def run_pipeline(user_input: str):
     url=user_input['url']

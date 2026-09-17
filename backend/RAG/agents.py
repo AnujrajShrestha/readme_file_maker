@@ -3,9 +3,8 @@ from langchain_mistralai import ChatMistralAI
 from langchain.agents import create_agent
 from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
-import os
 
-from tools import analyze_project,extract_tech_stack,extract_features,extract_structure,installation_tool,future_tool,architecture_maker,env_tool,usage_tool
+from .tools import analyze_project,extract_tech_stack,extract_features,extract_structure,installation_tool,future_tool,architecture_maker,env_tool,usage_tool
 load_dotenv()
 
 llm_groq_20b = ChatGroq(
