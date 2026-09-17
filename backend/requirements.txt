@@ -6,7 +6,7 @@ langchain-text-splitters
 langchain-chroma
 
 # LLM Providers
-langchain-mistral
+langchain-mistralai
 langchain-groq
 
 # Vector Database
@@ -27,7 +27,8 @@ tree-sitter-python
 
 # Utilities
 python-dotenv
-pydantic
 
-# UI
-streamlit
+# Backend
+fastapi
+uvicorn 
+pydantic
