@@ -1,4 +1,3 @@
-from langchain_mistralai import ChatMistralAI
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from dotenv import load_dotenv
@@ -7,14 +6,10 @@ from langchain_core.prompts import ChatPromptTemplate
 from tools import analyze_project,extract_tech_stack,extract_features,extract_structure,installation_tool,future_tool,architecture_maker,env_tool,usage_tool
 load_dotenv()
 
-llm_mistral= ChatMistralAI(
-    model="mistral-large-latest",
-    temperature=0.3
-)
-
-llm_groq= ChatGroq(
-    model="llama-3.3-70b-versatile",
-    temperature=0.3,
+llm = ChatGroq(
+    model="openai/gpt-oss-20b",
+    max_retries=5,
+    temperature=0
 )
 
 groq_prompt = ChatPromptTemplate.from_messages(
@@ -43,7 +38,7 @@ Task:
 
 def agent_groq():
     return create_agent(
-        model= llm_groq,
+        model= llm,
         tools= [analyze_project,extract_features,future_tool,installation_tool]
     )
 
@@ -87,7 +82,7 @@ Task:
 
 def agent_mistral():
     return create_agent(
-        model= llm_mistral,
+        model= llm,
         tools= [extract_tech_stack,extract_structure,architecture_maker,env_tool,usage_tool]
     )
     
