@@ -1,8 +1,8 @@
 from git_clone import clone_repo
 from db import run_db,load_context
-from agents import agent_groq,agent_mistral,mistral_prompt,groq_prompt
+from agents import agent_groq_20b,agent_groq_120b,mistral_prompt,groq_prompt
 from config import ProjectInput
-from readme_maker import create_readme
+from readme_maker import create_readme,_extract_content
 
 def run_pipeline(user_input: str):
     url=user_input['url']
@@ -14,10 +14,10 @@ def run_pipeline(user_input: str):
     context = load_context("Create a README file for this repository")
     
     print("\n"+" -"*50)
-    print("Step 1 - groq agent is working ...")
+    print("Step 1 - groq agent-20b is working ...")
     print("\n"+" -"*50)
     
-    agent1 = agent_groq()
+    agent1 = agent_groq_20b()
     response_groq = agent1.invoke(
     {
         "messages": groq_prompt.invoke(
@@ -29,13 +29,14 @@ def run_pipeline(user_input: str):
     }
 )
     state['groq_result']= response_groq
-    print(response_groq.content)
+    groq_content= _extract_content(response_groq)
+    print(groq_content)
     
     print("\n"+" -"*50)
-    print("Step 2 - mistral agent is working ...")
+    print("Step 2 - groq agent-120b is working ...")
     print("\n"+" -"*50)
     
-    agent2 = agent_mistral()
+    agent2 = agent_groq_120b()
     response_mistral = agent2.invoke(
     {
         "messages": mistral_prompt.invoke(
@@ -46,10 +47,10 @@ def run_pipeline(user_input: str):
         ).messages
     }
 )
-    state['mistral_result']= response_mistral
-    print(response_mistral.content)
-
-
+    state["mistral_result"] = response_mistral 
+    mistral_content = _extract_content(response_mistral) 
+    print(mistral_content)
+    
     state['author_result']={
         'author': user_input['author_name'],
         'github_id_url': user_input['github_id_url'],

@@ -1,32 +1,33 @@
+# LangChain
 langchain
 langchain-core
 langchain-community
+langchain-text-splitters
 langchain-chroma
 
+# LLM Providers
+langchain-mistral
 langchain-groq
-langchain-mistralai
-langchain-google-genai
 
+# Vector Database
 chromadb
 
-streamlit
+# Embeddings
+sentence-transformers
 
-python-dotenv
-pydantic
-
+# Data Processing
 pandas
 numpy
 
+# Repository Processing
 GitPython
-
-tiktoken
-
-sentence-transformers
-
 unstructured
-
 tree-sitter
 tree-sitter-python
 
-rich
+# Utilities
+python-dotenv
+pydantic
 
+# UI
+streamlit
