@@ -57,9 +57,15 @@ def run_pipeline(user_input: str):
         'decs': "⭐ If you found this project useful, consider giving it a star on GitHub!"
     }
         
-    create_readme(state,url)
+    readme= create_readme(state,url)
 
-    return state
+    return {
+        "readme": readme,
+        "project_name": user_input["project_name"],
+        "repository_url": url,
+        "author_name": user_input["author_name"],
+        "github_id_url": user_input["github_id_url"]
+    }
 
 
 if __name__ == "__main__":    

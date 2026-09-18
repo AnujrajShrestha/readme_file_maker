@@ -91,3 +91,5 @@ GitHub: {github}
 
     print(f"\n✅ README created successfully!")
     print(readme_path)
+    
+    return markdown
