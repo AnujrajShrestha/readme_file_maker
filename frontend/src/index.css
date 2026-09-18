@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e5e7eb;
+  background: #05070d;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(99, 102, 241, 0.16), transparent 34rem),
+    #05070d;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(129, 140, 248, 0.35);
+}
+
+.glass {
+  background: rgba(10, 14, 25, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.grid-fade {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -16px, 0); }
+}
+
+@keyframes pulseLine {
+  0%, 100% { opacity: .18; }
+  50% { opacity: .65; }
+}
+
+.float-slow { animation: float 8s ease-in-out infinite; }
+.float-slower { animation: float 12s ease-in-out infinite reverse; }
+.pulse-line { animation: pulseLine 4s ease-in-out infinite; }
+
+.prose-readme h1,
+.prose-readme h2,
+.prose-readme h3 {
+  color: #f8fafc;
+  font-weight: 800;
+  margin-top: 1.3em;
+  margin-bottom: .55em;
+}
+.prose-readme h1 { font-size: 1.8rem; }
+.prose-readme h2 { font-size: 1.35rem; }
+.prose-readme h3 { font-size: 1.1rem; }
+.prose-readme p, .prose-readme li { color: #cbd5e1; line-height: 1.75; }
+.prose-readme a { color: #a5b4fc; }
+.prose-readme code {
+  background: rgba(148, 163, 184, .12);
+  padding: .15rem .35rem;
+  border-radius: .35rem;
+  color: #ddd6fe;
+}
+.prose-readme pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: .8rem;
+  background: #070a12;
+  border: 1px solid rgba(148, 163, 184, .12);
+}
+.prose-readme pre code {
+  background: transparent;
+  padding: 0;
+}
+.prose-readme blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1rem;
+  color: #94a3b8;
+}
