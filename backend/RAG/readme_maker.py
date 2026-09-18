@@ -84,7 +84,7 @@ GitHub: {github}
 
 ---
 
-*This README was generated automatically using LangChain, RAG, Mistral AI, and Groq.*
+*This README was generated automatically using LangChain, RAG, Grop-20b and Groq-120b.*
 """
 
     readme_path.write_text(markdown, encoding="utf-8")

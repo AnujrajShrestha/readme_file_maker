@@ -1,7 +1,7 @@
 from langchain.tools import tool
 from pydantic import BaseModel,Field
 from typing import List,Optional
-from config import ProjectInput
+from .config import ProjectInput
 
 class ProjectAnalysis(BaseModel):
     project_name: str
