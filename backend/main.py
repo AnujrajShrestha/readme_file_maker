@@ -26,8 +26,10 @@ class userInput(BaseModel):
 class modelResponse(BaseModel):
     message: str 
     project_name: str 
-    repository_url: str 
-    result: dict
+    repository_url: HttpUrl
+    readme: str 
+    author_name: str
+    github_id_url: HttpUrl
 
 @app.get('/')
 def home():
@@ -36,17 +38,21 @@ def home():
 @app.post('/maker',response_model= modelResponse)
 def maker(features: userInput):
     try:
-        user_input = { "url": str(features.url),
-                      "project_name": features.project_name,
-                      "author_name": features.author_name,
-                      "github_id_url": str(features.github_id_url)
-                      }
-        result= run_pipeline(user_input)
+        result =run_pipeline({
+            'url': str(features.url),
+            'project_name': features.project_name,
+            'author_name': features.author_name,
+            'github_id_url': features.github_id_url
+        })
         
-        return { "message": "README generated successfully",
-                "project_name": features.project_name,
-                "repository_url": str(features.url),
-                "result": result }
+        return{
+             "message": "README generated successfully",
+            "project_name": result["project_name"],
+            "repository_url": result["repository_url"],
+            "readme": result["readme"],
+            "author_name": result["author_name"],
+            "github_id_url": result["github_id_url"]
+        }
     except Exception as e:
         raise HTTPException(
             status_code= 500,
